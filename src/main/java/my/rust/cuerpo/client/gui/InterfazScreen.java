@@ -55,14 +55,14 @@ public class InterfazScreen extends AbstractContainerScreen<InterfazMenu> implem
 			float oldYBodyRot = this.entity.yBodyRot;
 			float oldYHeadRot = this.entity.yHeadRot;
 
-			// Forzamos la rotación a 180 para que el modelo mire siempre de frente a la pantalla
-			this.entity.setYRot(180.0F);
+			// Forzamos la rotación base a 0 para que la matriz de rotación tenga el control total
+			this.entity.setYRot(0.0F);
 			this.entity.setXRot(0.0F);
-			this.entity.yBodyRot = 180.0F;
-			this.entity.yHeadRot = 180.0F;
+			this.entity.yBodyRot = 0.0F;
+			this.entity.yHeadRot = 0.0F;
 
-			// Rotación X de 180 para orientar correctamente el modelo en la GUI
-			Quaternionf rotation = new Quaternionf().rotationX((float) Math.toRadians(180));
+			// Ajustamos la rotación: X=180 para tumbarlo, Y=180 para que mire de frente en el menú
+			Quaternionf rotation = new Quaternionf().rotationXYZ((float) Math.toRadians(180), (float) Math.toRadians(180), 0.0F);
 			InventoryScreen.renderEntityInInventory(guiGraphics, (float) this.leftPos + 51, (float) this.topPos + 75, 30, new Vector3f(), rotation, null, this.entity);
 
 			// Restauramos la rotación original para no afectar al jugador en el mundo

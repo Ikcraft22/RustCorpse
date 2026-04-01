@@ -118,10 +118,11 @@ public class PlayerCorpseEntity extends Entity implements MenuProvider {
 		return true;
 	}
 
-    @Override
-    public Component getDisplayName() {
+        @Override
+        public Component getDisplayName() {
         return Component.literal("Cuerpo de " + playerName);
     }
+
 
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
@@ -140,7 +141,7 @@ public class PlayerCorpseEntity extends Entity implements MenuProvider {
 
     @Override
 	public EntityDimensions getDimensions(Pose pose) {
-        // Dimensiones similares a un jugador agachado o tumbado
-        return EntityDimensions.scalable(0.9f, 0.8f);
+        // Una hitbox de 1.5 es lo suficientemente grande para cubrir el cuerpo centrado
+        return EntityDimensions.scalable(1.5f, 0.5f);
     }
 }

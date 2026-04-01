@@ -11,7 +11,9 @@ Un mod avanzado que transforma la desconexión de los jugadores en una oportunid
     *   **Modelo 3D en Tiempo Real**: La pantalla de saqueo muestra una vista previa del cuerpo utilizando la **skin real del jugador** que se desconectó.
     *   **Renderizado Fiel**: Soporte para capas de skin y modelos Slim/Classic.
     *   **Botón "Take All" Inteligente**: Vacía el cuerpo con un solo clic, transfiriendo ítems al inventario del saqueador o soltándolos en el suelo si no hay espacio.
-*   **Renderizado en el Mundo**: Los cuerpos aparecen físicamente en el mundo, acostados en la posición exacta de desconexión, manteniendo la identidad visual del jugador.
+*   **Renderizado en el Mundo**: 
+    *   Los cuerpos aparecen físicamente en el mundo, acostados en la posición de desconexión, manteniendo la identidad visual del jugador.
+    *   **Sistema Anti-Solapamiento**: Algoritmo de micro-desplazamiento aleatorio para evitar el parpadeo de texturas (Z-fighting) cuando varios jugadores desconectan en el mismo punto.
 *   **Optimización de Mundo (Auto-Clean)**:
     *   El cuerpo se desintegra automáticamente cuando el inventario queda vacío, evitando la acumulación de entidades innecesarias.
     *   Lógica de limpieza inmediata tras usar el botón "Take All".

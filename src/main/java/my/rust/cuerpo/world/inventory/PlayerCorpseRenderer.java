@@ -32,8 +32,12 @@ public class PlayerCorpseRenderer extends EntityRenderer<PlayerCorpseEntity> {
         // 1. Acostar el cuerpo (rotar 90 grados en el eje X)
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         
-        // 2. Ajustar la altura para que no flote ni se hunda
-        poseStack.translate(0.0D, -0.1D, -0.1D);
+        // 2. CENTRADO CRÍTICO: 
+        // Un jugador mide ~1.8 bloques. Al rotarlo, queda desplazado.
+        // Lo movemos -0.9 en el eje Y (que ahora es el Z del mundo) para que el
+        // centro del cuerpo coincida exactamente con el centro de la hitbox (0,0,0).
+        // El -0.1 en Z (ahora Y mundo) es para que no se entierre en el suelo.
+        poseStack.translate(0.0D, -0.9D, -0.1D);
         
         // 3. Dibujar el modelo
         ResourceLocation texture = getTextureLocation(entity);
@@ -45,15 +49,10 @@ public class PlayerCorpseRenderer extends EntityRenderer<PlayerCorpseEntity> {
         super.render(entity, yaw, partialTicks, poseStack, buffer, packedLight);
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(PlayerCorpseEntity entity) {
-        if (entity.getPlayerUUID() != null) {
-            // Se requiere un GameProfile para buscar la skin
-            GameProfile profile = new GameProfile(entity.getPlayerUUID(), null);
-            PlayerSkin skin = Minecraft.getInstance().getSkinManager().getInsecureSkin(profile);
-            return skin.texture();
-        }
-        // Obtener skin por defecto según el UUID
-        return DefaultPlayerSkin.get(entity.getPlayerUUID() != null ? entity.getPlayerUUID() : java.util.UUID.randomUUID()).texture();
+        @Override
+        public ResourceLocation getTextureLocation(PlayerCorpseEntity entity) {
+        // Esto obliga al renderizador a usar la skin de Steve/Alex base del juego
+        return net.minecraft.client.resources.DefaultPlayerSkin.getDefaultTexture();
     }
+
 }

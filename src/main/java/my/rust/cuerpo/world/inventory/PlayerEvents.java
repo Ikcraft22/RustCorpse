@@ -28,8 +28,14 @@ public class PlayerEvents {
         if (player instanceof ServerPlayer serverPlayer && player.level() instanceof ServerLevel serverLevel) {
             // 1. Crear la entidad del cuerpo
             PlayerCorpseEntity corpse = new PlayerCorpseEntity(EntityRegistry.PLAYER_CORPSE.get(), serverLevel);
-            corpse.setPos(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ());
-            corpse.setPlayerName(serverPlayer.getScoreboardName());
+            
+            // Posición: Centrada exactamente. El pequeño valor aleatorio en Y evita el parpadeo visual entre modelos.
+            double microY = serverLevel.getRandom().nextDouble() * 0.01;
+            corpse.moveTo(serverPlayer.getX(), serverPlayer.getY() + microY, serverPlayer.getZ(), serverPlayer.getYRot(), 0.0F);
+
+            // Identidad: Usamos el nombre del GameProfile para evitar que se reinicie o falle el texto
+            String nameStr = serverPlayer.getGameProfile().getName();
+            corpse.setPlayerName(nameStr);
             corpse.setPlayerUUID(serverPlayer.getUUID());
 
             // 1.1 Capturar Logros y Estadísticas
